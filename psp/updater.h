@@ -14,14 +14,8 @@ static uint32_t progress_tick;
 typedef struct {char *memory; unsigned used,limit; SceUID file;} Download;
 static void update_message(const char *message){snprintf(update_status,sizeof(update_status),"%s",message);status=update_status;draw();}
 static bool read_repo(char *repo){
- SceUID f=sceIoOpen(ROOT "repozytorium.txt",PSP_O_RDONLY,0);
- if(f<0)return false;
- char buffer[104];int n=sceIoRead(f,buffer,sizeof(buffer)-1);sceIoClose(f);
- if(n<=0||n>102)return false;
- buffer[n]=0;
- while(n>0&&(buffer[n-1]=='\r'||buffer[n-1]=='\n'))buffer[--n]=0;
- if((int)strlen(buffer)!=n||!repo_valid(buffer))return false;
- strcpy(repo,buffer);return true;
+ strcpy(repo,DEFAULT_REPOSITORY);
+ return repo_valid(repo);
 }
 static CURLcode ssl_context(CURL *curl,void *ctx,void *user){
  (void)curl;(void)user;
@@ -106,7 +100,7 @@ static void install_update(void){
 }
 static void run_update(int action){
  char repo[101];
- if(action==0&&!read_repo(repo)){update_ready=false;strcpy(update_title,"Sprawdź aktualizacje");strcpy(update_detail,"Wyślij repozytorium.txt do folderu Transfer");update_message("W pliku wpisz: właściciel/nazwa-repozytorium");return;}
+ if(action==0&&!read_repo(repo)){update_ready=false;strcpy(update_title,"Sprawdź aktualizacje");strcpy(update_detail,"Niepoprawna konfiguracja kompilacji");update_message("Błąd wbudowanego adresu repozytorium");return;}
  if(server<0){connect_wifi();if(server<0)return;}
  if(action==1){char body[16385];Download data={body,0,sizeof(body)-1,-1};if(https_get("https://api.github.com/",&data))update_message("GitHub HTTPS działa. Certyfikat sprawdzony.");}
  else if(update_ready&&!strcmp(repo,pending_repo))install_update();

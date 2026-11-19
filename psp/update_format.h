@@ -4,7 +4,8 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdint.h>
-#define CURRENT_VERSION "0.5.1"
+#define CURRENT_VERSION "0.5.0"
+#define DEFAULT_REPOSITORY "DawidPapp/PSP-Link"
 #define UPDATE_LIMIT (32u*1024u*1024u)
 typedef struct { char version[16]; unsigned size; unsigned char sha[32]; } UpdateInfo;
 static bool repo_valid(const char *s) {

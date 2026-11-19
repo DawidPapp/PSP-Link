@@ -33,7 +33,7 @@ static uint32_t *vram;
 static volatile uint32_t *pixels;
 static unsigned frame, received, sent, wrong_pins;
 static int server = -1, category, row = 1;
-static char update_title[64]="Sprawdź aktualizacje", update_detail[96]="GitHub Releases · bezpośrednio przez Wi-Fi";
+static char update_title[64]="Sprawdź aktualizacje", update_detail[96]=DEFAULT_REPOSITORY;
 static char ip[16], pin[7], network_error[96];
 static unsigned int dialog_list[4096] __attribute__((aligned(16)));
 static const char *status = "Wybierz Połącz z Wi-Fi, aby rozpocząć.";

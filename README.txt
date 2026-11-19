@@ -1,10 +1,10 @@
-PSP LINK 0.5.1 — ODTWORZONY INTERFEJS + AKTUALIZACJE HTTPS
+PSP LINK 0.5.0 — ODTWORZONY INTERFEJS + AKTUALIZACJE HTTPS
 
 Instalacja teraz, bez repozytorium
 1. Pobierz sam plik EBOOT.PBP na telefon.
 2. W działającym PSP Link 0.3.2/0.4 wybierz na Androidzie Wgraj aplikację.
-3. Podaj NOWY folder PSPLink051 i wyślij EBOOT.PBP.
-4. Zamknij dotychczasową wersję i uruchom PSP Link 0.5.1 w Gra > Memory Stick.
+3. Podaj NOWY folder PSPLink050 i wyślij EBOOT.PBP.
+4. Zamknij dotychczasową wersję i uruchom PSP Link 0.5.0 w Gra > Memory Stick.
 5. W nowej zakładce Aktualizacje wybierz Test HTTPS z GitHub.
    PSP samo wybierze sieć przez systemowe okno, jeśli nie jest połączone.
    Sukces ma komunikat: GitHub HTTPS działa. Certyfikat sprawdzony.
@@ -19,22 +19,13 @@ Krzyżak wybiera kategorię i opcję; X potwierdza; O wychodzi/anuluje pobierani
 Wszystkie grafiki, czcionka i certyfikaty są zawarte w EBOOT.PBP.
 
 Skąd aktualizacje
-Repozytorium: https://github.com/DawidPapp/PSP-Link
-Test HTTPS używa https://api.github.com/.
-Plik repozytorium.txt w głównym katalogu projektu zawiera gotową konfigurację.
-1. Użyj publicznego repozytorium DawidPapp/PSP-Link.
-2. Utwórz plik repozytorium.txt zawierający tylko właściciel/nazwa-repozytorium.
-   Wpisz prawdziwe wartości, bez https://github.com/ i bez dodatkowych komentarzy.
-3. Wyślij go z Androida jako zwykły plik tekstowy do folderu Transfer.
-   Fizyczna ścieżka: ms0:/PSP/GAME/PSPLink/Transfer/repozytorium.txt.
-   Jeśli plik już istnieje, usuń go przez USB przed wysłaniem nowej konfiguracji.
-4. W PSP wybierz Aktualizacje > Sprawdź aktualizacje.
-5. Jeśli dostępna jest wyższa wersja, zobaczysz jej numer i rozmiar.
-   Naciśnij X ponownie, aby pobrać. O przerywa pobieranie.
-6. Aktualizacja trafia do osobnego folderu PSP/GAME/PSPLink-NUMER/EBOOT.PBP.
-   Wyjdź do systemowego menu i uruchom tę wersję. Dotychczasowa pozostaje.
-Nie jest to podmiana działającego pliku w miejscu ani aktualizacja firmware PSP.
-Pozostaw starą instalację PSPLink jako kopię; jej folder Transfer jest współdzielony.
+Repozytorium DawidPapp/PSP-Link jest wbudowane w EBOOT.PBP.
+Nie trzeba wysyłać pliku repozytorium.txt. Starszy plik jest ignorowany.
+Wybierz Aktualizacje > Sprawdź aktualizacje. Jeśli dostępna jest wyższa
+wersja, naciśnij X ponownie, aby pobrać ją do nowego folderu.
+Numer wcześniejszego wydania testowego 0.5.1 zmieniono na 0.5.0.
+Jeśli masz już 0.5.1, wgraj tę poprawioną 0.5.0 przez Androida/USB.
+Aktualizator nie instaluje niższych numerów wersji.
 
 Przygotowanie wydań GitHub
 Kod źródłowy znajduje się w folderze Zrodla w archiwum projektu.

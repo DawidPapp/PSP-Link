@@ -1,6 +1,7 @@
 #include <assert.h>
 #include "../psp/update_format.h"
 int main(void){
+ assert(!strcmp(DEFAULT_REPOSITORY,"DawidPapp/PSP-Link") && repo_valid(DEFAULT_REPOSITORY));
  const char *bad[]={"","owner","a/b/c","../repo","a/../b","a/repo?x","a/repo#x","a/repo%20","a/","/b","a/b\n","a/..",".a/b"};
  for(unsigned i=0;i<sizeof(bad)/sizeof(*bad);++i)assert(!repo_valid(bad[i]));
  assert(repo_valid("User-1/PSP.Link"));

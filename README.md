@@ -7,17 +7,17 @@ Przesyłanie plików między PSP i Androidem przez Wi-Fi oraz eksperymentalne po
 ## Instalacja i test aktualizacji
 
 1. Pobierz `EBOOT.PBP` z [Releases](https://github.com/DawidPapp/PSP-Link/releases/latest).
-2. Prześlij go działającym PSP Link do **nowego** folderu, np. `PSPLink051`, albo skopiuj przez USB do `PSP/GAME/PSPLink051/EBOOT.PBP`.
+2. Prześlij go działającym PSP Link do **nowego** folderu, np. `PSPLink050`, albo skopiuj przez USB do `PSP/GAME/PSPLink050/EBOOT.PBP`.
 3. Uruchom nową wersję w **Gra → Memory Stick**.
 4. Wybierz **Aktualizacje → Test HTTPS z GitHub**.
 
-Aby wersja **0.5.0** wykryła nowsze wydanie, wyślij z Androida plik [`repozytorium.txt`](repozytorium.txt) jako zwykły plik TXT do folderu Transfer. Jego zawartość to:
+## Repozytorium wbudowane
 
-```text
-DawidPapp/PSP-Link
-```
+Wersja **0.5.0** ma fabrycznie ustawione **DawidPapp/PSP-Link**. Wybierz **Aktualizacje → Sprawdź aktualizacje**; nie trzeba przesyłać `repozytorium.txt`. Starszy plik konfiguracyjny jest ignorowany.
 
-Następnie wybierz **Aktualizacje → Sprawdź aktualizacje**, a po wyświetleniu nowej wersji naciśnij X, aby ją pobrać. Nowy EBOOT jest zapisywany obok dotychczasowej instalacji. Nie następuje podmiana działającego programu ani zmiana firmware.
+Numer wcześniejszego testowego wydania 0.5.1 został skorygowany na 0.5.0 na prośbę autora repozytorium. Zmieniony EBOOT trzeba wgrać ręcznie przez Androida lub USB — aktualizator nie instaluje niższych wersji.
+
+Gdy pojawi się wydanie nowsze od 0.5.0, po wykryciu naciśnij X, aby je pobrać. Nowy EBOOT jest zapisywany obok dotychczasowej instalacji, bez zmiany firmware PSP.
 
 ## Funkcje
 
