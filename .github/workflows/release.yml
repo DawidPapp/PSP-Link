@@ -1,0 +1,48 @@
+name: Build and release PSP Link
+on:
+  push:
+    branches: [main]
+    paths: ['psp/**', 'tools/**', 'tests/**', '.github/workflows/release.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: psplink-release
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: debian:trixie
+    timeout-minutes: 20
+    steps:
+      - name: Install build dependencies
+        run: |
+          apt-get update -qq
+          apt-get install -y --no-install-recommends ca-certificates curl git make gcc libssl-dev python3 python3-pil fonts-open-sans libmpc3 libmpfr6 libgmp10 libzstd1 zlib1g
+      - uses: actions/checkout@v4
+      - name: Download pinned PSPDEV
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 https://github.com/pspdev/pspdev/releases/download/v20261101/pspdev-debian-latest.tar.gz -o /tmp/pspdev.tar.gz
+          echo 'a5d688f7dd88f0bcb2e36336c62da7da718e28b562fed488c836e46d5ec337fa  /tmp/pspdev.tar.gz' | sha256sum -c -
+          tar -xzf /tmp/pspdev.tar.gz -C "$GITHUB_WORKSPACE"
+          echo "PSPDEV=$GITHUB_WORKSPACE/pspdev" >> "$GITHUB_ENV"
+          echo "$GITHUB_WORKSPACE/pspdev/bin" >> "$GITHUB_PATH"
+      - name: Build PSP application
+        run: |
+          python3 psp/ui/build_assets.py
+          make -C psp
+      - name: Run host tests
+        run: |
+          python3 tests/test_protocol.py
+          python3 tests/test_wifi.py
+          cc -Wall -Wextra -Werror tests/test_update_format.c -o test-format
+          ./test-format
+          python3 tests/test_install.py
+      - name: Prepare release assets
+        run: python3 tools/make_release.py
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/publish_release.py

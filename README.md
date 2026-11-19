@@ -1,5 +1,60 @@
 # PSP Link
 
-Aplikacja PSP z towarzyszącą aplikacją Android do przesyłania plików przez Wi-Fi.
+Przesyłanie plików między PSP i Androidem przez Wi-Fi oraz eksperymentalne pobieranie aktualizacji bezpośrednio z GitHub Releases.
 
-Trwa przygotowanie źródeł i wydania testowego aktualizatora HTTPS. Działanie nowego aktualizatora na PSP-3004 OFW 6.20 wymaga sprawdzenia na urządzeniu.
+**Sprzęt docelowy:** PSP-3004, OFW 6.20. Kompilacja i testy na komputerze nie zastępują testu HTTPS na konsoli.
+
+## Instalacja i test aktualizacji
+
+1. Pobierz `EBOOT.PBP` z [Releases](https://github.com/DawidPapp/PSP-Link/releases/latest).
+2. Prześlij go działającym PSP Link do **nowego** folderu, np. `PSPLink051`, albo skopiuj przez USB do `PSP/GAME/PSPLink051/EBOOT.PBP`.
+3. Uruchom nową wersję w **Gra → Memory Stick**.
+4. Wybierz **Aktualizacje → Test HTTPS z GitHub**.
+
+Aby wersja **0.5.0** wykryła nowsze wydanie, wyślij z Androida plik [`repozytorium.txt`](repozytorium.txt) jako zwykły plik TXT do folderu Transfer. Jego zawartość to:
+
+```text
+DawidPapp/PSP-Link
+```
+
+Następnie wybierz **Aktualizacje → Sprawdź aktualizacje**, a po wyświetleniu nowej wersji naciśnij X, aby ją pobrać. Nowy EBOOT jest zapisywany obok dotychczasowej instalacji. Nie następuje podmiana działającego programu ani zmiana firmware.
+
+## Funkcje
+
+- Menu inspirowane wersją Androidową, dostosowane do ekranu 480×272.
+- Systemowe okno wyboru zapisanej sieci Wi-Fi.
+- Przesyłanie plików TXT do 1 MiB i pojedynczych aplikacji PBP do 32 MiB.
+- GitHub HTTPS z kontrolą certyfikatu i nazwy hosta; sprawdzanie rozmiaru, PBP i SHA-256 aktualizacji.
+- Brak nadpisywania istniejących folderów aplikacji.
+
+Suma SHA-256 pochodzi z opisu wydania pobranego przez HTTPS. Nie jest to osobny podpis autora. Użytkownik ufa właścicielowi skonfigurowanego repozytorium.
+
+## Budowanie
+
+PSPDEV **v20261101**, biblioteki curl i mbedTLS dostarczone z SDK. Na Debianie zainstaluj Python 3, Pillow oraz `fonts-open-sans`.
+
+```sh
+python3 psp/ui/build_assets.py
+export PSPDEV=/pelna/sciezka/do/pspdev
+export PATH="$PSPDEV/bin:$PATH"
+make -C psp
+python3 tools/make_release.py
+```
+
+`psp/ui/cacert.pem` zawiera publiczne certyfikaty CA z curl.se; nie zawiera kluczy prywatnych. Generator osadza je i czcionkę w EBOOT, aby nie wymagał dodatkowych plików.
+
+Workflow buduje PSP, uruchamia testy i publikuje `EBOOT.PBP` wraz z `psplink-update.txt`. Przed kolejnym wydaniem zwiększ `CURRENT_VERSION` w `psp/update_format.h`. Opublikowane wersje nie są nadpisywane.
+
+## Testy
+
+```sh
+python3 tests/test_protocol.py
+python3 tests/test_wifi.py
+cc -Wall -Wextra -Werror tests/test_update_format.c -o test-format
+./test-format
+python3 tests/test_install.py
+```
+
+Testy instalacji używają symulowanego pobierania i API PSP. Testy na fizycznym PSP pozostają konieczne.
+
+Pełna instrukcja: [README.txt](README.txt). Licencje zależności: [licenses](licenses/).

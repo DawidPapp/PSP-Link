@@ -1,0 +1,15 @@
+psp/*.o
+psp/*.elf
+psp/*.prx
+psp/EBOOT.PBP
+psp/PARAM.SFO
+psp/ui/font.h
+psp/ui/ca.h
+release/
+pspdev/
+android/build/
+android/*.apk
+android/*.idsig
+android/*.jks
+__pycache__/
+test-format
